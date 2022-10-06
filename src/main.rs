@@ -52,7 +52,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .add_scope(Scope::new("routes".to_string()))
         .request_async(async_http_client).await?;
 
-    let uri: Uri = format!("https://api.{}:443", args.domain).parse()?;
+    let uri: Uri = format!("https://api.{}", args.domain).parse()?;
     let channel = Channel::builder(uri).connect().await?;
 
     let token: MetadataValue<_> = format!("Bearer {}", token_result.access_token().secret()).parse()?;
