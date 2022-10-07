@@ -1608,6 +1608,7 @@ dependencies = [
  "tonic",
  "tonic-build",
  "tower",
+ "vasystem-api-grpc",
 ]
 
 [[package]]
@@ -1617,6 +1618,19 @@ dependencies = [
  "clap",
  "tokio",
  "vasystem-api",
+]
+
+[[package]]
+name = "vasystem-api-grpc"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "27f2ff4876259fab94fdfbcda127466196e9c209a629b55ed85625d8697ec42b"
+dependencies = [
+ "prost",
+ "prost-build",
+ "prost-types",
+ "tonic",
+ "tonic-build",
 ]
 
 [[package]]

@@ -10,7 +10,10 @@ use crate::api::routes_service_client::RoutesServiceClient;
 use crate::auth::AuthSvc;
 use crate::oauth2::TokenSource;
 
-pub mod api;
+pub mod api {
+    #[doc(inline)]
+    pub use vasystem_api_grpc::*;
+}
 mod auth;
 mod oauth2;
 

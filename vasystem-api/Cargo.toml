@@ -6,6 +6,7 @@ license = "MIT"
 homepage = "https://docs.vasystem.dev/"
 documentation = "https://docs.vasystem.dev/"
 readme = "README.md"
+description = "VASystem API client"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -21,6 +22,7 @@ serde_json = "1.0"
 tokio = "1.0"
 tonic = { version = "0.8", features = ["tls", "tls-roots"] }
 tower = "0.4"
+vasystem-api-grpc = "0.1"
 
 [build-dependencies]
 prost-build = "0.11"
