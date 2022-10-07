@@ -1,0 +1,27 @@
+[package]
+name = "vasystem-api"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+homepage = "https://docs.vasystem.dev/"
+documentation = "https://docs.vasystem.dev/"
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures-core = "0.3"
+http = "0.2"
+oauth2 = "4.2"
+prost = "0.11"
+prost-types = "0.11"
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
+serde = "1.0"
+serde_json = "1.0"
+tokio = "1.0"
+tonic = { version = "0.8", features = ["tls", "tls-roots"] }
+tower = "0.4"
+
+[build-dependencies]
+prost-build = "0.11"
+tonic-build = "0.8"
