@@ -5,7 +5,7 @@ edition = "2021"
 license = "MIT"
 homepage = "https://docs.vasystem.dev/"
 documentation = "https://docs.vasystem.dev/"
-readme = "README.md"
+readme = "../README.md"
 description = "VASystem API client"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
