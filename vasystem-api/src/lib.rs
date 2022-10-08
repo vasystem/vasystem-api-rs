@@ -1,3 +1,4 @@
+use std::env;
 use std::sync::Arc;
 
 use http::Uri;
@@ -31,7 +32,15 @@ impl Client {
         let token_source =
             TokenSource::new(domain.clone(), client_id, client_secret, scopes).await?;
 
-        let uri: Uri = format!("https://api.{}", domain).parse()?;
+        let mut uri: Uri = format!("https://api.{}", domain).parse()?;
+
+        if cfg!(debug_assertions) {
+            match env::var_os("VASYSTEM_API_URL") {
+                Some(val) => uri = val.into_string().unwrap().parse()?,
+                None => (),
+            }
+        }
+
         let channel = Channel::builder(uri).connect().await?;
 
         let token_source = Arc::new(token_source);

@@ -1,9 +1,11 @@
+use std::env;
+use std::sync::Arc;
+
 use oauth2::basic::{BasicClient, BasicTokenResponse};
 use oauth2::reqwest::async_http_client;
 use oauth2::{AuthUrl, ClientId, ClientSecret, Scope, TokenResponse, TokenUrl};
 use reqwest;
 use serde::Deserialize;
-use std::sync::Arc;
 
 #[derive(Deserialize)]
 pub struct WellKnown {
@@ -23,13 +25,16 @@ pub struct TokenSource {
 }
 
 pub async fn get_well_known(domain: &str) -> Result<WellKnown, Box<dyn std::error::Error>> {
-    let well_known: WellKnown = reqwest::get(format!(
-        "https://{}/.well-known/openid-configuration",
-        domain
-    ))
-    .await?
-    .json()
-    .await?;
+    let mut uri = format!("https://{}/.well-known/openid-configuration", domain);
+
+    if cfg!(debug_assertions) {
+        match env::var_os("VASYSTEM_API_WELL_KNOWN_URL") {
+            Some(val) => uri = val.into_string().unwrap(),
+            None => (),
+        }
+    }
+
+    let well_known: WellKnown = reqwest::get(uri).await?.json().await?;
 
     Ok(well_known)
 }
