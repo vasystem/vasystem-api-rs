@@ -1622,9 +1622,9 @@ dependencies = [
 
 [[package]]
 name = "vasystem-api-grpc"
-version = "0.1.0"
+version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "27f2ff4876259fab94fdfbcda127466196e9c209a629b55ed85625d8697ec42b"
+checksum = "60a525c26f3298a25a195c59f30f97a3dca3ae531134dad47463b936b0d19f29"
 dependencies = [
  "prost",
  "prost-build",

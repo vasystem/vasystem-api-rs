@@ -1,7 +1,7 @@
 use clap::Parser;
 
 use vasystem_api::{
-    api::{ListAirlinesRequest, ListRoutesRequest},
+    api::{GetVirtualAirlineRequest, ListAirlinesRequest, ListRoutesRequest},
     Client, Request,
 };
 
@@ -26,6 +26,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         vec!["airlines".to_string(), "routes".to_string()],
     )
     .await?;
+
+    let response = client
+        .virtual_airlines()
+        .get_virtual_airline(Request::new(GetVirtualAirlineRequest {}))
+        .await?;
+
+    println!("RESPONSE = {:?}", response);
 
     let response = client
         .airlines()

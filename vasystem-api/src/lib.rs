@@ -8,6 +8,7 @@ use tower::ServiceBuilder;
 
 use crate::api::airlines_service_client::AirlinesServiceClient;
 use crate::api::routes_service_client::RoutesServiceClient;
+use crate::api::virtual_airlines_service_client::VirtualAirlinesServiceClient;
 use crate::auth::AuthSvc;
 use crate::oauth2::TokenSource;
 
@@ -58,5 +59,9 @@ impl Client {
 
     pub fn routes(&self) -> RoutesServiceClient<AuthSvc<Channel>> {
         RoutesServiceClient::new(self.channel.clone())
+    }
+
+    pub fn virtual_airlines(&self) -> VirtualAirlinesServiceClient<AuthSvc<Channel>> {
+        VirtualAirlinesServiceClient::new(self.channel.clone())
     }
 }
