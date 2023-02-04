@@ -8,5 +8,5 @@ publish = false
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
-tokio = "1.0"
+tokio = "1.24"
 vasystem-api = { path = "../vasystem-api" }
