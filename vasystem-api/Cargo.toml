@@ -14,16 +14,16 @@ description = "VASystem API client"
 futures-core = "0.3"
 http = "0.2"
 oauth2 = "4.2"
-prost = "0.11"
-prost-types = "0.11"
+prost = "0.12"
+prost-types = "0.12"
 reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
 serde = "1.0"
 serde_json = "1.0"
 tokio = "1.0"
-tonic = { version = "0.8", features = ["tls", "tls-roots"] }
+tonic = { version = "0.10", features = ["tls", "tls-roots"] }
 tower = "0.4"
 vasystem-api-grpc = "0.1"
 
 [build-dependencies]
-prost-build = "0.11"
-tonic-build = "0.8"
+prost-build = "0.12"
+tonic-build = "0.10"

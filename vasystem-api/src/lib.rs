@@ -20,7 +20,7 @@ mod auth;
 mod oauth2;
 
 pub struct Client {
-    channel: AuthSvc<Channel>,
+    channel: AuthSvc,
 }
 
 impl Client {
@@ -53,15 +53,15 @@ impl Client {
         Ok(Client { channel })
     }
 
-    pub fn airlines(&self) -> AirlinesServiceClient<AuthSvc<Channel>> {
+    pub fn airlines(&self) -> AirlinesServiceClient<AuthSvc> {
         AirlinesServiceClient::new(self.channel.clone())
     }
 
-    pub fn routes(&self) -> RoutesServiceClient<AuthSvc<Channel>> {
+    pub fn routes(&self) -> RoutesServiceClient<AuthSvc> {
         RoutesServiceClient::new(self.channel.clone())
     }
 
-    pub fn virtual_airlines(&self) -> VirtualAirlinesServiceClient<AuthSvc<Channel>> {
+    pub fn virtual_airlines(&self) -> VirtualAirlinesServiceClient<AuthSvc> {
         VirtualAirlinesServiceClient::new(self.channel.clone())
     }
 }

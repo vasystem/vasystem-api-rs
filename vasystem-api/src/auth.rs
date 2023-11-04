@@ -1,19 +1,22 @@
+use std::future::Future;
+use std::pin::Pin;
 use std::sync::Arc;
 use std::task::{Context, Poll};
 
 use crate::oauth2::TokenSource;
-use futures_core::future::BoxFuture;
-use http::{HeaderValue, Request};
+use http::{HeaderValue, Request, Response};
+use tonic::body::BoxBody;
+use tonic::transport::{Body, Channel};
 use tower::Service;
 
 #[derive(Clone)]
-pub struct AuthSvc<T> {
-    inner: T,
+pub struct AuthSvc {
+    inner: Channel,
     token_source: Arc<TokenSource>,
 }
 
-impl<T> AuthSvc<T> {
-    pub fn new(inner: T, token_source: Arc<TokenSource>) -> Self {
+impl AuthSvc {
+    pub fn new(inner: Channel, token_source: Arc<TokenSource>) -> Self {
         Self {
             inner,
             token_source,
@@ -21,22 +24,16 @@ impl<T> AuthSvc<T> {
     }
 }
 
-impl<T, ReqBody> Service<Request<ReqBody>> for AuthSvc<T>
-where
-    ReqBody: Send + 'static,
-    T: Service<Request<ReqBody>> + Clone + Send + 'static,
-    T::Future: Send + 'static,
-    T::Error: Into<Box<dyn std::error::Error + Send + Sync>>,
-{
-    type Response = T::Response;
+impl Service<Request<BoxBody>> for AuthSvc {
+    type Response = Response<Body>;
     type Error = Box<dyn std::error::Error + Send + Sync>;
-    type Future = BoxFuture<'static, Result<Self::Response, Self::Error>>;
+    type Future = Pin<Box<dyn Future<Output = Result<Self::Response, Self::Error>> + Send>>;
 
     fn poll_ready(&mut self, cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
         self.inner.poll_ready(cx).map_err(Into::into)
     }
 
-    fn call(&mut self, mut req: Request<ReqBody>) -> Self::Future {
+    fn call(&mut self, mut req: Request<BoxBody>) -> Self::Future {
         let token_source = self.token_source.clone();
 
         // This is necessary because tonic internally uses `tower::buffer::Buffer`.
